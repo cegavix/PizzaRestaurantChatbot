@@ -5,6 +5,9 @@ from nltk.stem import WordNetLemmatizer
 from nltk.corpus import stopwords
 import string
 
+from sklearn.feature_extraction.text import TfidfVectorizer
+from sklearn.metrics.pairwise import cosine_similarity
+
 # Download necessary NLTK resources
 # nltk.download('punkt')
 # nltk.download('wordnet')
@@ -59,6 +62,8 @@ def find_intent(message):
     best_intent = max(intent_scores, key=intent_scores.get)
 
     return best_intent, intent_scores
+
+
 
 
 # Example usage
