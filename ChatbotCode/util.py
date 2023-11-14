@@ -1,5 +1,6 @@
 import string
 import nltk
+from nltk.corpus import stopwords
 
 
 def download_nltk_resources():
@@ -44,14 +45,13 @@ def set_name(my_input):
 def preprocess_text(text):
     # Generates lemmatized tokens, free of punctuation and stop words
     lemmatizer = nltk.WordNetLemmatizer()
-    # Convert to lower case
-    text = text.lower()
-    # Tokenize
     tokens = nltk.word_tokenize(text)
     # Remove punctuation
     tokens = [word for word in tokens if word not in string.punctuation]
-    # Remove stopwords
-    tokens = [word for word in tokens if word not in nltk.stopwords.words('english')]
+    # Remove stopwords: Seems to keep ruining stuff
+    #tokens = [word for word in tokens if word not in nltk.corpus.stopwords.words('english')]
     # Lemmatize
     tokens = [lemmatizer.lemmatize(word) for word in tokens]
+    tokens = [word.lower() for word in tokens]
     return tokens
+

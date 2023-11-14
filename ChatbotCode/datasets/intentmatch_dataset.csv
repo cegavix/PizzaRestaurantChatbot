@@ -1,0 +1,55 @@
+Question,Intent
+Hello how are you?,greeting
+Hey, how's everything?,greeting
+Howdy how are you?,greeting
+How's it going?,greeting 
+Good to see you!,greeting
+I'm glad to meet you,greeting
+You seem nice,greeting
+Good Morning,greeting
+Good Evening,greeting
+Good Afternoon,greeting
+Hey,greeting
+Thanks ,greeting
+Thank you,greeting
+Hi,greeting
+Hope you are well,greeting
+Lets get started,greeting
+What's on the menu?,menu
+What do you have for food?,menu
+What food do you have ,menu
+What are your specials?,menu
+Tell me about your desserts menu, menu
+Any recommendations for a romantic dinner?,menu
+Do you have outdoor seating?,menu
+Tell me about your wine selection,menu
+I'm allergic to nuts; can you accommodate that?,menu
+Can I customize my order?,menu
+Can you accommodate dietary restrictions?,menu
+Do you have gluten-free options?,menu
+What's the chef's recommendation today?,menu
+I'm craving a big meal,menu
+I want some food ,menu
+Can I see the menu,menu
+What type of food do you have?,menu
+Do you have vegan/vegetarian food?,menu
+What's your cancellation policy?,booking
+Is there a reservation fee?,booking
+Can I modify my reservation?,booking
+How busy is the restaurant right now?,booking
+Do you have a waiting list?,booking
+What's the latest available time for booking?,booking
+How far in advance should I book?,booking
+Can I bring my own cake for a celebration?,booking
+Are you open on holidays?,booking
+Can I book a table,booking
+Can I book a table,booking
+May I book,booking
+Can I reserve ,booking
+May I make a reservation,booking
+Could I make a booking for 7pm,booking
+I need a table for 2,booking
+I need a table for today,booking
+Can I make an appointment?,booking
+Can I make a reservation,booking
+Can I make a booking?,booking
