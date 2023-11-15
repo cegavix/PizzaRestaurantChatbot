@@ -1,6 +1,6 @@
 Question,Intent
 Hello how are you?,greeting
-Hey, how's everything?,greeting
+Hey,greeting
 Howdy how are you?,greeting
 How's it going?,greeting 
 Good to see you!,greeting
@@ -53,3 +53,13 @@ I need a table for today,booking
 Can I make an appointment?,booking
 Can I make a reservation,booking
 Can I make a booking?,booking
+Goodbye ,exit
+Quit,exit
+Bye,exit
+I want to leave,exit
+I'm finished now,exit
+Adios,exit
+Arrivederci ,exit
+Byebye,exit
+I'm going to go,exit
+Can I leave now?,exit
