@@ -1,9 +1,9 @@
-import csv
-
 import joblib
-from sklearn.feature_extraction.text import TfidfVectorizer, CountVectorizer, TfidfTransformer
+from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.linear_model import LogisticRegression
 from sklearn.metrics.pairwise import cosine_similarity
+from sklearn.model_selection import train_test_split
+from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from util import make_arrays_from_csv
 
 
@@ -24,56 +24,84 @@ def calculate_intent(query, threshold, intents):
         return False
 
 
-data = []
-labels = []
-
-
-# Determine which intent the response matches to with a classifier. Has to be done instantly
 def make_vector_space_with_Classifier():
-    # Takes a split data set... why? This is for training testing purposes only.
-    # Should be able to take multiple lines with a \n in the middle, just does the firstl ine(see split)
-    # Make the bag of words as a CountVectorizer, and then fit training data on and transform to term-freq
-    # Count Vectorizer.fit_transform creates an array (the width of the vocab) with a count for how much appears
+    """
+    Makes the vectorizers for smalltalk and intents in joblibs since they are unchanging. Makes the classifier for
+    intents.
+    """
+    # Only needs to be run once (unless datasets are changed)
+    st_vectorizer = TfidfVectorizer(ngram_range=(1, 2), lowercase=True, stop_words='english')
+    intent_tfidf_vectorizer = TfidfVectorizer(ngram_range=(1, 3), lowercase=True, stop_words='english')
+
+    # Make Classifier
     responses, intents = make_arrays_from_csv('datasets/intentmatch_dataset.csv')
-    tfidf_vectorizer = TfidfVectorizer()
-    # Make a term-freq matrix of the questions, and fits vocab to vectorizer
-    tfidf_matrix = tfidf_vectorizer.fit_transform(responses)
-    joblib.dump(tfidf_matrix, 'tfidf_intent_matrix.joblib')
-    joblib.dump(tfidf_vectorizer, 'tfidf_intent_vectorizer.joblib')
+    intent_tfidf_matrix = intent_tfidf_vectorizer.fit_transform(responses)
+    classifier = LogisticRegression(random_state=0).fit(intent_tfidf_matrix, intents)
 
-    classifier = LogisticRegression(random_state=0).fit(tfidf_matrix, intents)
-    # Assuming tfidf_vectorizer is the object you want to save
+    # Dump data structures
+    joblib.dump(intent_tfidf_matrix, 'intent_matrix.joblib')
+    joblib.dump(st_vectorizer, 'st_vectorizer.joblib')
+    joblib.dump(intent_tfidf_vectorizer, 'intent_vectorizer.joblib')
     joblib.dump(classifier, 'intent_classifier.joblib')
-
 
 # make_vector_space_with_Classifier()
 
 
 def classify_intent_similarity(user_response_of_intent):
-    tfidf_vectorizer = joblib.load('tfidf_intent_vectorizer.joblib')
-    user_vector = tfidf_vectorizer.transform([user_response_of_intent])
+    # TODO: Add responses to all the intents, and print them before passing to booking function? why is small talk handled only here and all other intents arent? is it cos no context tracking needed?
+    """
+    Handles the dynamic aspects of vectorizers, that rely on user input
+    Uses both Cosine Similarity and a Classifier to determine sure intent. SMALL TALK is a separate Vector Space and
+    uses only cosine similarity. Other intents are in a Vector space together and use a Classifier AND Cosine Similarity.
 
-    tfidf_matrix = joblib.load('tfidf_intent_matrix.joblib')
+    :param user_response_of_intent: str, what the user inputted
+    :return: Provides the intent, which can be any of the following: SMALL TALK, name, booking, menu, exit
+    """
+    # Load in vectorizers
+    intent_vectorizer = joblib.load('intent_vectorizer.joblib')
+    st_vectorizer = joblib.load('st_vectorizer.joblib')
 
-    # Predict the intent
+    # Load/Make term frq matrices
+    tfidf_matrix = joblib.load('intent_matrix.joblib')
+    st_prompt, st_responses = make_arrays_from_csv('datasets/smalltalk_dataset.csv')
+    st_matrix = st_vectorizer.fit_transform(st_prompt)
+
+    # Map on input vectors
+    user_vector = intent_vectorizer.transform([user_response_of_intent])
+    st_user_vector = st_vectorizer.transform([user_response_of_intent])
+
+    # Predict the intent using classifier
     classifier = joblib.load('intent_classifier.joblib')
     pred_intent = classifier.predict(user_vector)
 
-    # Calculate cosine similarity between the search vector and all question vectors
+    # Calculate cosine similarity between the input vector and intent vectors and small talk
     cosine_similarities = cosine_similarity(user_vector, tfidf_matrix)
+    st_cosine_similarities = cosine_similarity(st_user_vector, st_matrix)
 
-    # Get the index of the most similar question
+    # Get the highest cosine similarity for intent
     most_similar_index = cosine_similarities.argmax()
     highest_similarity = cosine_similarities[0, most_similar_index]
 
-    # TODO: Play around with threshold see which words for the dataset
-    if pred_intent == ['greeting'] and highest_similarity > 0.6:
+    # Get the highest cosine similarity for small talk
+    st_most_similar_index = st_cosine_similarities.argmax()
+    st_highest_similarity = st_cosine_similarities[0, st_most_similar_index]
+
+    print('Before IFs, i think intent is: %s with a cosine of %f' % (pred_intent, highest_similarity))
+    # TODO: Make sure the similarity is for the SAME INTENT!! cos theyre traineddifferent
+    # TODO: Maybe I should include some form of 'keywords weights', use stop words to find keywords
+    # If small talk cosine is higher than intent cosine:
+    if st_highest_similarity > highest_similarity and st_highest_similarity > 0.7:
+        best_st_response = st_responses[st_most_similar_index]
+        print("Papa:", best_st_response)
+        return 'SMALL TALK'
+    if pred_intent == ['name'] and highest_similarity > 0.6:
         return pred_intent
     if pred_intent == ['menu'] and highest_similarity > 0.6:
         return pred_intent
-    if pred_intent == ['booking'] and highest_similarity > 0.5:
+    if pred_intent == ['booking'] and highest_similarity > 0.6:
         return pred_intent
-    if pred_intent == ['exit'] and highest_similarity > 0.6:
+    if pred_intent == ['exit'] and highest_similarity > 0.7:
         return pred_intent
     else:
         return 'NOT FOUND'
+

@@ -3,8 +3,9 @@ from QA_general_knowledge import *
 from util import *
 
 # download_nltk_resources()
-# TODO: stop using array of intents and make corpus to use
 # TODO: Context tracking, u want the chatbot to remember stuff
+
+
 if __name__ == "__main__":
     user_name = 'User'
     flag = True
@@ -22,15 +23,30 @@ if __name__ == "__main__":
 
         if intent == ['greeting']:
             print("How's it going!")
+        if intent == 'SMALL TALK':
+            pass
         elif intent == ['exit']:
             print("Thank you and Arrivederci!")
             break
+        elif intent == ['name']:
+            change_name = input('Papa: Your name is %s. Would you like to change it? y/n' % user_name)
+            if change_name == 'y':
+                user_name = set_name(input('What is your name?'))
+            print('Okay, %s. What do you want to talk about now?' % user_name)
         elif intent == ['booking']:
             print('Transferring u onto booking personnel...')
         elif intent == ['menu']:
             print('Here\'s the menu:')
-        elif find_similar_q(user_input, 0.7):
-            print("Hope that answered ur question... next most similar question?")
-        # elif small_talk_model()
+            print("\n".join([
+                "Margherita Pizza: Classic pizza with tomato, fresh mozzarella, and basil. - $10.99",
+                "Spaghetti Bolognese: Spaghetti pasta with a rich meat sauce. - $12.99",
+                "Caprese Salad: Fresh tomatoes, mozzarella, and basil drizzled with balsamic glaze. - $8.99"
+            ]))
+        elif find_similar_q(user_input):
+            pass
+            # user_input = input("Hope that answered ur question... Did it?")
+            # if user_input == 'positive'
+            # add(user_input,answer) to dataset
+            # Maybe try
         else:
             print("I'm not sure I understand!")

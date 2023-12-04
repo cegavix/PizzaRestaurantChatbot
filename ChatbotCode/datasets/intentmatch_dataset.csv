@@ -1,25 +1,18 @@
 Question,Intent
-Hello how are you?,greeting
-Hey,greeting
-Howdy how are you?,greeting
-How's it going?,greeting 
-Good to see you!,greeting
-I'm glad to meet you,greeting
-You seem nice,greeting
-Good Morning,greeting
-Good Evening,greeting
-Good Afternoon,greeting
-Hey,greeting
-Thanks ,greeting
-Thank you,greeting
-Hi,greeting
-Hope you are well,greeting
-Lets get started,greeting
+What is my name?,name
+I bet you forgot my name,name
+Remember my name?,name
+Tell me my name, name
+You forgot my name already, name
+What is my name,name
+Change my name, name
+Who are you talking to?,name
+Lets get started,menu
 What's on the menu?,menu
 What do you have for food?,menu
 What food do you have ,menu
-What are your specials?,menu
-Tell me about your desserts menu, menu
+What are your specials?, menu
+Tell me about your desserts menu,menu
 Any recommendations for a romantic dinner?,menu
 Do you have outdoor seating?,menu
 Tell me about your wine selection,menu
@@ -32,16 +25,15 @@ I'm craving a big meal,menu
 I want some food ,menu
 Can I see the menu,menu
 What type of food do you have?,menu
-Do you have vegan/vegetarian food?,menu
+Do you have vegan/vegetarian food?,booking
 What's your cancellation policy?,booking
 Is there a reservation fee?,booking
 Can I modify my reservation?,booking
-How busy is the restaurant right now?,booking
+How many bookings do you have,booking
 Do you have a waiting list?,booking
 What's the latest available time for booking?,booking
 How far in advance should I book?,booking
-Can I bring my own cake for a celebration?,booking
-Are you open on holidays?,booking
+I want to make a booking,booking
 Can I book a table,booking
 Can I book a table,booking
 May I book,booking
@@ -52,14 +44,17 @@ I need a table for 2,booking
 I need a table for today,booking
 Can I make an appointment?,booking
 Can I make a reservation,booking
-Can I make a booking?,booking
-Goodbye ,exit
+Can I make a booking?,exit
+Goodbye,exit
 Quit,exit
 Bye,exit
-I want to leave,exit
+im going to leave,exit
 I'm finished now,exit
 Adios,exit
 Arrivederci ,exit
 Byebye,exit
 I'm going to go,exit
 Can I leave now?,exit
+Stop,exit
+I want you to go,exit
+Exit,exit

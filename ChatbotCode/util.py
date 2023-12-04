@@ -1,8 +1,20 @@
 import csv
+import sqlite3
 import string
 import nltk
-from nltk.corpus import stopwords
 
+
+def insert_database(name, time, people_num):
+    connection = sqlite3.connect('booking.db')
+    cursor = connection.cursor()
+    cursor.execute('''CREATE TABLE IF NOT EXISTS bookings
+                    (name text NOT NULL, start_time text NOT NULL, people_size int NOT NULL);''')
+
+    cursor.execute("INSERT INTO bookings VALUES (?,?,?)", (name, time, people_num))
+    task1 = cursor.execute("SELECT * FROM bookings")
+    print("Booking added to database:", task1.fetchall())
+    connection.commit()
+    connection.close()
 
 def download_nltk_resources():
     # Download resources if necessary
@@ -41,20 +53,20 @@ def make_arrays_from_csv(filepath):
 
 def preprocess_text(text):
     # Generates lemmatized tokens, free of punctuation and stop words
-    lemmatizer = nltk.WordNetLemmatizer()
     tokens = nltk.word_tokenize(text)
     # Remove punctuation
     tokens = [word for word in tokens if word not in string.punctuation]
     # Remove stopwords: Seems to keep ruining stuff
     # tokens = [word for word in tokens if word not in nltk.corpus.stopwords.words('english')]
     # Lemmatize
+    lemmatizer = nltk.WordNetLemmatizer()
     tokens = [lemmatizer.lemmatize(word) for word in tokens]
     tokens = [word.lower() for word in tokens]
     return tokens
 
 
 def set_name(my_input):
-    # TODO: If u type hello, it will take this as the name, or just the first word!!! fix? ne_chunks? ngrams? (look for (name, NNP) tuples
+    # TODO: If u type hello, it will take this as the name, or just the first word!!! fix? ne_chunks? ngrams? NER (look for (name, NNP) tuples
     # Use library to perform entity recognition using bag of words tagging
     name = "NOT FOUND"
 
@@ -63,13 +75,12 @@ def set_name(my_input):
     for entity in pos_tags:
         if isinstance(entity, tuple) and entity[1] == 'NNP':  # NNP: Proper noun, singular
             name = entity[0]
-            #print("NNP Name found: %s" % entity[0])
+            # print("NNP Name found: %s" % entity[0])
             # Once ideal name is found, the system stops looking
             return name
         elif isinstance(entity, tuple) and entity[1] == 'NN':
             name = entity[0]
-            #print("Name found: %s" % entity[0])
+            # print("Name found: %s" % entity[0])
         elif len(pos_tags) == 1:
             name = entity[0]
     return name
-
