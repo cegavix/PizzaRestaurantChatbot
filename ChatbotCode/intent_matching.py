@@ -29,9 +29,9 @@ def make_vector_space_with_Classifier():
     Makes the vectorizers for smalltalk and intents in joblibs since they are unchanging. Makes the classifier for
     intents.
     """
-    # Only needs to be run once (unless datasets are changed)
-    st_vectorizer = TfidfVectorizer(ngram_range=(1, 2), lowercase=True, stop_words='english')
-    intent_tfidf_vectorizer = TfidfVectorizer(ngram_range=(1, 3), lowercase=True, stop_words='english')
+    # Only needs to be run once (unless datasets are changed). Stop words make the questions useless???
+    st_vectorizer = TfidfVectorizer(ngram_range=(1, 2), lowercase=True)
+    intent_tfidf_vectorizer = TfidfVectorizer(ngram_range=(1, 3), lowercase=True)
 
     # Make Classifier
     responses, intents = make_arrays_from_csv('datasets/intentmatch_dataset.csv')
@@ -105,3 +105,5 @@ def classify_intent_similarity(user_response_of_intent):
     else:
         return 'NOT FOUND'
 
+# EVERYTHING is classified as booking lol.Cos of stop words.... no user_input left
+# classify_intent_similarity("hOW ARE YOU")

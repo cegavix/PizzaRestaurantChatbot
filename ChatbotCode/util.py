@@ -1,20 +1,6 @@
 import csv
-import sqlite3
 import string
 import nltk
-
-
-def insert_database(name, time, people_num):
-    connection = sqlite3.connect('booking.db')
-    cursor = connection.cursor()
-    cursor.execute('''CREATE TABLE IF NOT EXISTS bookings
-                    (name text NOT NULL, start_time text NOT NULL, people_size int NOT NULL);''')
-
-    cursor.execute("INSERT INTO bookings VALUES (?,?,?)", (name, time, people_num))
-    task1 = cursor.execute("SELECT * FROM bookings")
-    print("Booking added to database:", task1.fetchall())
-    connection.commit()
-    connection.close()
 
 def download_nltk_resources():
     # Download resources if necessary

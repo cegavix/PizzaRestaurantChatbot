@@ -17,7 +17,7 @@ def make_Q_vector_space():
 
 
 # TODO: Why does it just have absolutely 0 idea ab certain questions, even without stop words? ie. 'what are stocks and bonds'? Ask chatgpt, give her my code
-make_Q_vector_space()
+
 def find_similar_q(my_question):
 
 
@@ -48,6 +48,6 @@ def find_similar_q(my_question):
 
 
 # TODO: Evaluate the accuracy of the information retrieval system, using lab3
-while True:
-    user_input = input("What is ur q?")
-    print(find_similar_q(user_input))
+# while True:
+#     user_input = input("What is ur q?")
+#     print(find_similar_q(user_input))

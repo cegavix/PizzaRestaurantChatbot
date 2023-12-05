@@ -1,6 +1,7 @@
-from intent_matching import *
-from QA_general_knowledge import *
+from intent_matching import classify_intent_similarity
+from QA_general_knowledge import find_similar_q
 from util import *
+from transaction_management import make_booking
 
 # download_nltk_resources()
 # TODO: Context tracking, u want the chatbot to remember stuff
@@ -34,7 +35,7 @@ if __name__ == "__main__":
                 user_name = set_name(input('What is your name?'))
             print('Okay, %s. What do you want to talk about now?' % user_name)
         elif intent == ['booking']:
-            print('Transferring u onto booking personnel...')
+            make_booking(user_input, user_name)
         elif intent == ['menu']:
             print('Here\'s the menu:')
             print("\n".join([
