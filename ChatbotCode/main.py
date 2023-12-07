@@ -22,15 +22,13 @@ if __name__ == "__main__":
         # to intent matcher? Long, processes the questions twice this way.. but joblib could help
         # print("Your intent is:", intent)
 
-        if intent == ['greeting']:
-            print("How's it going!")
         if intent == 'SMALL TALK':
             pass
         elif intent == ['exit']:
             print("Thank you and Arrivederci!")
             break
         elif intent == ['name']:
-            change_name = input('Papa: Your name is %s. Would you like to change it? y/n' % user_name)
+            change_name = input('Papa: Your name is %s. Would you like to change it? y/n' % user_name).lower()
             if change_name == 'y':
                 user_name = set_name(input('What is your name?'))
             print('Okay, %s. What do you want to talk about now?' % user_name)

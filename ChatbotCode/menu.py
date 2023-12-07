@@ -14,14 +14,23 @@ menu = [
     {"Dish": "Espresso", "Description": "Strong and rich Italian coffee.", "Price": "$3.99"},
     {"Dish": "Gelato", "Description": "Assorted flavors of Italian ice cream.", "Price": "$5.99"}
 ]
+
+
+def search_dish(menu_choice):
+    for index, dish in enumerate(menu):
+        if dish['Dish'].lower() == menu_choice.lower():
+            return index
+    return None
+
+
 def print_menu_entry(index):
     # Print the menu
-    print("We have a range of delicious options on our Menu:")
+    print("Alright! Here is a dish that might be what you're looking for:")
     print("{:<25} {:<70} {:<10}".format("Dish", "Description", "Price"))
     print("-" * 105)
+
     item = menu[index]
-    print("{:<25} {:<70} {:<10}".format(item["Dish"], item["Description"], item["Price"],
-                                        item["Dietary Requirements"]))
+    print("{:<25} {:<70} {:<10}".format(item["Dish"], item["Description"], item["Price"]))
 
 
 def print_menu():
@@ -32,3 +41,8 @@ def print_menu():
 
     for item in menu:
         print("{:<25} {:<70} {:<10}".format(item["Dish"], item["Description"], item["Price"]))
+
+
+menu_index = search_dish("margherita pizza")
+print_menu_entry(menu_index)
+

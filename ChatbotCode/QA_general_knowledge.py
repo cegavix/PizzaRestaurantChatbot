@@ -19,12 +19,6 @@ def make_Q_vector_space():
 # TODO: Why does it just have absolutely 0 idea ab certain questions, even without stop words? ie. 'what are stocks and bonds'? Ask chatgpt, give her my code
 
 def find_similar_q(my_question):
-
-
-    # # Process User_Input
-    # tokens = preprocess_text(my_question)
-    # processed_user_input = " ".join(tokens)
-
     # Maps onto the same vector space AND tokenizes and tfidf weighs them
     tfidf_vectorizer = joblib.load('qa_vectorizer.joblib')
     user_vector = tfidf_vectorizer.transform([my_question])

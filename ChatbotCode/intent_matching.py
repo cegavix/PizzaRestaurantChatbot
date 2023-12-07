@@ -5,9 +5,9 @@ from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import accuracy_score, precision_score, recall_score, f1_score
 from util import make_arrays_from_csv
+from QA_general_knowledge import find_similar_q
 
-
-# Modules for Calculating Intent using vectorisr cosine similarity
+# Modules for Calculating Intent using vectoriser cosine similarity
 # Determine whether a response is similar enough to a sample Response in the dataset
 def calculate_intent(query, threshold, intents):
     # See if query matches an intent with TfiDf vectoriser
@@ -44,7 +44,7 @@ def make_vector_space_with_Classifier():
     joblib.dump(intent_tfidf_vectorizer, 'intent_vectorizer.joblib')
     joblib.dump(classifier, 'intent_classifier.joblib')
 
-# make_vector_space_with_Classifier()
+
 
 
 def classify_intent_similarity(user_response_of_intent):
@@ -57,6 +57,8 @@ def classify_intent_similarity(user_response_of_intent):
     :param user_response_of_intent: str, what the user inputted
     :return: Provides the intent, which can be any of the following: SMALL TALK, name, booking, menu, exit
     """
+
+    make_vector_space_with_Classifier()
     # Load in vectorizers
     intent_vectorizer = joblib.load('intent_vectorizer.joblib')
     st_vectorizer = joblib.load('st_vectorizer.joblib')
@@ -86,7 +88,8 @@ def classify_intent_similarity(user_response_of_intent):
     st_most_similar_index = st_cosine_similarities.argmax()
     st_highest_similarity = st_cosine_similarities[0, st_most_similar_index]
 
-    print('Before IFs, i think intent is: %s with a cosine of %f' % (pred_intent, highest_similarity))
+    # find_similar_q(user_response_of_intent)
+    # print('Before IFs, i think intent is: %s with a cosine of %f' % (pred_intent, highest_similarity))
     # TODO: Make sure the similarity is for the SAME INTENT!! cos theyre traineddifferent
     # TODO: Maybe I should include some form of 'keywords weights', use stop words to find keywords
     # If small talk cosine is higher than intent cosine:
@@ -105,5 +108,3 @@ def classify_intent_similarity(user_response_of_intent):
     else:
         return 'NOT FOUND'
 
-# EVERYTHING is classified as booking lol.Cos of stop words.... no user_input left
-# classify_intent_similarity("hOW ARE YOU")
