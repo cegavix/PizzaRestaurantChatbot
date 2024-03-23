@@ -76,7 +76,7 @@ Thank you and Arrivederci!
 
 ## Evaluation & Testing 
 - Chatbot Usability Questionairre: Achieved 70.3, A high benchmark for usability
-            ![performance evaluation](imgs/Performance_testing.png)
+            ![performance evaluation](imgs/Performance_Testing.png)
 
 ## Future Plans
 - I will continue by developing more intricate Chatbot systems, that include deep learning, Convolutional Neural Networks and pre-trained transformers that I will fine tune and build upon for my specific use case. 
