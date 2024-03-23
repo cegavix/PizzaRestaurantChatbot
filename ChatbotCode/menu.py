@@ -33,9 +33,16 @@ def print_menu_entry(index):
     print("{:<25} {:<70} {:<10}".format(item["Dish"], item["Description"], item["Price"]))
 
 
+def display_search_dish(menu_choice):
+    for index, dish in enumerate(menu):
+        if dish['Dish'].lower() in menu_choice.lower():
+            print_menu_entry(index)
+            return True
+    return None
+
+
 def print_menu():
     # Print the menu
-    print("Here is the dish that matches your query:")
     print("{:<25} {:<70} {:<10}".format("Dish", "Description", "Price"))
     print("-" * 105)
 
@@ -43,6 +50,4 @@ def print_menu():
         print("{:<25} {:<70} {:<10}".format(item["Dish"], item["Description"], item["Price"]))
 
 
-menu_index = search_dish("margherita pizza")
-print_menu_entry(menu_index)
 

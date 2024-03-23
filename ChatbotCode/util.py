@@ -1,4 +1,5 @@
 import csv
+from csv import writer
 import string
 import nltk
 
@@ -35,6 +36,23 @@ def make_arrays_from_csv(filepath):
             questions.append(question)
             answers.append(response)
     return questions, answers
+
+
+def write_to_csv(row, filepath):
+    """
+    :param row: a list of data u want to add to the csv file
+    :param filepath: with csv file u want to add to
+    """
+    with open(filepath, 'a') as f_object:
+        # Pass this file object to csv.writer()
+        # and get a writer object
+        writer_object = writer(f_object)
+
+        # Pass the list as an argument into
+        writer_object.writerow(row)
+
+        # Close the file object
+        f_object.close()
 
 
 def preprocess_text(text):

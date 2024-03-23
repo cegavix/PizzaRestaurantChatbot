@@ -1,17 +1,17 @@
 Question,Intent
-What is my name?,name
+Can I change my name,name
 I bet you forgot my name,name
 Remember my name?,name
-Tell me my name, name
-You forgot my name already, name
+Tell me my name,name
+You forgot my name already,name
 What is my name,name
-Change my name, name
+Change my name,name
 Who are you talking to?,name
 Lets get started,menu
 What's on the menu?,menu
 What do you have for food?,menu
 What food do you have ,menu
-What are your specials?, menu
+What are your specials?,menu
 Tell me about your desserts menu,menu
 Any recommendations for a romantic dinner?,menu
 Do you have outdoor seating?,menu
@@ -44,7 +44,7 @@ I need a table for 2,booking
 I need a table for today,booking
 Can I make an appointment?,booking
 Can I make a reservation,booking
-Can I make a booking?,exit
+Can I make a booking?,booking
 Goodbye,exit
 Quit,exit
 Bye,exit
@@ -58,3 +58,4 @@ Can I leave now?,exit
 Stop,exit
 I want you to go,exit
 Exit,exit
+I want to leave,exit
